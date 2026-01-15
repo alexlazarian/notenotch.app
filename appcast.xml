@@ -6,6 +6,28 @@
         <language>en</language>
         <link>https://github.com/alexlazarian/NoteNotch</link>
         
+        <!-- Version 1.0.3 - Text Version Update -->
+        <item>
+            <title>Version 1.0.3</title>
+            <description>
+                <![CDATA[
+                    <h2>🧾 Settings</h2>
+                    <ul>
+                        <li>Updated the version text indicator</li>
+                    </ul>
+                ]]>
+            </description>
+            <pubDate>Thu, 15 Jan 2026 03:57:04 +0000</pubDate>
+            <enclosure 
+                url="https://github.com/alexlazarian/NoteNotch-Releases/releases/download/v1.0.3/NoteNotch-1.0.3.zip"
+                sparkle:version="8"
+                sparkle:shortVersionString="1.0.3"
+                length="4878176"
+                type="application/octet-stream"
+                sparkle:edSignature="gn1RmMZREXb/juIa+jNSWhAIvWI7bIOzv6zflab9HgeVdtENlWn2QVLbdxXVAHU9zsyEc1iyxcUGyIE3BXWMCw==" />
+            <sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>
+        </item>
+        
         <!-- Version 1.0.2 - Version Indicator -->
         <item>
             <title>Version 1.0.2</title>
