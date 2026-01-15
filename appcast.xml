@@ -5,7 +5,30 @@
         <description>Most recent updates to NoteNotch</description>
         <language>en</language>
         <link>https://github.com/alexlazarian/NoteNotch</link>
-        
+
+        <!-- Version 1.0.6 - Sparkle Update Fix -->
+        <item>
+            <title>Version 1.0.6</title>
+            <description>
+                <![CDATA[
+                    <h2>🐛 Bug Fixes</h2>
+                    <ul>
+                        <li>Fixed Sparkle update checker error</li>
+                        <li>Removed unnecessary XPC service configuration</li>
+                    </ul>
+                ]]>
+            </description>
+            <pubDate>Tue, 14 Jan 2026 12:30:00 +0000</pubDate>
+            <enclosure
+                url="https://github.com/alexlazarian/NoteNotch-Releases/releases/download/v1.0.6/NoteNotch-1.0.6.zip"
+                sparkle:version="11"
+                sparkle:shortVersionString="1.0.6"
+                length="4988408"
+                type="application/octet-stream"
+                sparkle:edSignature="COVbY5F711WzrFSKe2bTqpH9i77RjNojka1ssRIzFFPU2hJDrw9Hjzz9uFhHuaV1HQBv9BK9yg4ip/hlTXIDBw==" />
+            <sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>
+        </item>
+
         <!-- Version 1.0.5 - Update in Progress -->
         <item>
             <title>Version 1.0.5</title>
