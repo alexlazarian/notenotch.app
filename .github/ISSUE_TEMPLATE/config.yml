@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: 💬 General Discussion
-    url: https://github.com/YOUR_USERNAME/NoteNotch-Releases/discussions
+    url: https://github.com/alexlazarian/NoteNotch-Releases/discussions
     about: Have a question or want to chat? Start a discussion!
   - name: 📖 Documentation
-    url: https://YOUR_USERNAME.github.io/NoteNotch-Releases/
+    url: https://alexlazarian.github.io/NoteNotch-Releases/
     about: Check out the documentation and guides
