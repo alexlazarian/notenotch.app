@@ -22,9 +22,9 @@
                 url="https://github.com/alexlazarian/NoteNotch-Releases/releases/download/v1.0.7/NoteNotch-1.0.7.zip"
                 sparkle:version="12"
                 sparkle:shortVersionString="1.0.7"
-                length="4988412"
+                length="4988507"
                 type="application/octet-stream"
-                sparkle:edSignature="RbPrtCSh31ncCvaRNAOFk1u+suh+u2XVtZI7SR+Qfm5zvjnYnGWKWAbstmswA9NYpJPgWQSNcsmqMzzBbkBtBg==" />
+                sparkle:edSignature="fWHJ/BFvXVCscOx7euIuFKSfGV9mbMv5V3LGShsjpI0qkEARc5OGy2/ZFxD8ZXI3N5psncycBY9ffZtBQTtKBA==" />
             <sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>
         </item>
 
