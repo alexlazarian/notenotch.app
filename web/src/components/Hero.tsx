@@ -4,6 +4,8 @@ import {useEffect, useRef, useState} from 'react'
 import {gsap} from 'gsap'
 import ResizableSquare from './ResizableSquare'
 
+const logoUrl = `${import.meta.env.BASE_URL}lovable-uploads/a8ea2d9b-ba2a-459f-a582-22cf6ea5c3fb.png`
+
 export const Hero = () => {
 	const noteWidth = 250 // matches initialWidth
 	const [demoPosition, setDemoPosition] = useState({
@@ -108,7 +110,7 @@ export const Hero = () => {
 				>
 					<div className='size-20'>
 						<img
-							src='/lovable-uploads/a8ea2d9b-ba2a-459f-a582-22cf6ea5c3fb.png'
+							src={logoUrl}
 							alt='NoteNotch'
 						/>
 					</div>
