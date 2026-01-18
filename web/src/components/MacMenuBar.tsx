@@ -58,13 +58,13 @@ export const MacMenuBar = ({show = true}: MacMenuBarProps) => {
 				<nav className='flex items-center gap-4'>
 					<button 
 						onClick={() => scrollToSection('features')}
-						className='text-[13px] leading-none text-black/90 hover:text-black transition-colors font-normal tracking-[-0.01em]'
+						className='text-[13px] leading-none text-gray-300 hover:text-[#FF90E8] transition-colors font-normal tracking-[-0.01em]'
 					>
 						Features
 					</button>
 					<button 
 						onClick={() => scrollToSection('comparison')}
-						className='text-[13px] leading-none text-black/90 hover:text-black transition-colors font-normal tracking-[-0.01em]'
+						className='text-[13px] leading-none text-gray-300 hover:text-[#FF90E8] transition-colors font-normal tracking-[-0.01em]'
 					>
 						Why NoteNotch
 					</button>
@@ -72,7 +72,7 @@ export const MacMenuBar = ({show = true}: MacMenuBarProps) => {
 						href='https://iclazar.gumroad.com/l/notenotch'
 						target='_blank'
 						rel='noopener noreferrer'
-						className='text-[13px] leading-none text-black/90 hover:text-black transition-colors font-normal tracking-[-0.01em]'
+						className='text-[13px] leading-none text-gray-300 hover:text-[#FF90E8] transition-colors font-normal tracking-[-0.01em]'
 					>
 						Download
 					</a>
@@ -82,7 +82,7 @@ export const MacMenuBar = ({show = true}: MacMenuBarProps) => {
 			{/* Right side - System icons and time */}
 			<div className='flex items-center gap-2'>
 				{/* Mock system icons */}
-				<div className='hidden md:flex items-center gap-1.5 text-black/80'>
+				<div className='hidden md:flex items-center gap-1.5 text-gray-400'>
 					{/* Control Center icon */}
 					<svg className='w-[16px] h-[16px]' fill='currentColor' viewBox='0 0 24 24'>
 						<path d='M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z'/>
@@ -94,15 +94,15 @@ export const MacMenuBar = ({show = true}: MacMenuBarProps) => {
 					</svg>
 					{/* Battery icon */}
 					<div className='flex items-center gap-0.5'>
-						<div className='w-[20px] h-[9px] border border-black/60 rounded-[2px] flex items-center p-[1px]'>
-							<div className='w-[85%] h-full bg-black/60 rounded-[1px]' />
+						<div className='w-[20px] h-[9px] border border-gray-500 rounded-[2px] flex items-center p-[1px]'>
+							<div className='w-[85%] h-full bg-gray-400 rounded-[1px]' />
 						</div>
-						<div className='w-[1.5px] h-[4px] bg-black/60 rounded-r-sm' />
+						<div className='w-[1.5px] h-[4px] bg-gray-500 rounded-r-sm' />
 					</div>
 				</div>
 
 				{/* Current time */}
-				<span className='text-[13px] leading-none text-black/90 font-normal tracking-[-0.01em] tabular-nums ml-1'>
+				<span className='text-[13px] leading-none text-gray-300 font-normal tracking-[-0.01em] tabular-nums ml-1'>
 					{currentTime}
 				</span>
 			</div>
