@@ -3,7 +3,6 @@ import {useEffect} from 'react'
 import {AppleLogo} from '@/assets/logos/apple'
 import {GumroadLogo} from '@/assets/logos/gumroad'
 import TextType from '@/components/ui/text-type'
-import {InteractiveDemo} from '@/components/InteractiveDemo'
 
 const logoUrl = `${import.meta.env.BASE_URL}logo.png`
 
@@ -96,14 +95,6 @@ export const Hero = () => {
 				</p>
 			</div>
 
-			{/* Interactive Demo */}
-			<div
-				className='reveal opacity-0 w-full max-w-[960px] mx-auto px-6 relative z-10'
-				style={{animationDelay: '0.3s'}}
-			>
-				<InteractiveDemo />
-				<p className='text-center text-gray-500 text-sm mt-4'>↔ Drag to see the magic</p>
-			</div>
 
 		</section>
 	)

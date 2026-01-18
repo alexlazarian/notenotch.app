@@ -3,11 +3,11 @@ interface FeaturesSectionProps {
 	onThemesHover?: (isHovering: boolean) => void
 	onBionicHover?: (isHovering: boolean) => void
 	onMarkdownHover?: (isHovering: boolean) => void
-	onAutoUpdateHover?: (isHovering: boolean) => void
+	onInvisibleHover?: (isHovering: boolean) => void
 	onLocalHover?: (isHovering: boolean) => void
 }
 
-export const FeaturesSection = ({ onPositionHover, onThemesHover, onBionicHover, onMarkdownHover, onAutoUpdateHover, onLocalHover }: FeaturesSectionProps) => {
+export const FeaturesSection = ({ onPositionHover, onThemesHover, onBionicHover, onMarkdownHover, onInvisibleHover, onLocalHover }: FeaturesSectionProps) => {
 	const features = [
 		{
 			title: 'Position',
@@ -22,9 +22,9 @@ export const FeaturesSection = ({ onPositionHover, onThemesHover, onBionicHover,
 			dark: false,
 		},
 		{
-			title: 'Auto',
-			subtitle: 'updates',
-			description: 'Always stay current with seamless background updates.',
+			title: 'Invisible',
+			subtitle: 'to others',
+			description: 'Hidden from screen shares. Only you can see your notes.',
 			dark: true,
 		},
 		{
@@ -80,7 +80,7 @@ export const FeaturesSection = ({ onPositionHover, onThemesHover, onBionicHover,
 							onMouseEnter={() => {
 								if (index === 0) onPositionHover?.(true)
 								if (index === 1) onThemesHover?.(true)
-								if (index === 2) onAutoUpdateHover?.(true)
+								if (index === 2) onInvisibleHover?.(true)
 								if (index === 3) onBionicHover?.(true)
 								if (index === 4) onMarkdownHover?.(true)
 								if (index === 5) onLocalHover?.(true)
@@ -88,7 +88,7 @@ export const FeaturesSection = ({ onPositionHover, onThemesHover, onBionicHover,
 							onMouseLeave={() => {
 								if (index === 0) onPositionHover?.(false)
 								if (index === 1) onThemesHover?.(false)
-								if (index === 2) onAutoUpdateHover?.(false)
+								if (index === 2) onInvisibleHover?.(false)
 								if (index === 3) onBionicHover?.(false)
 								if (index === 4) onMarkdownHover?.(false)
 								if (index === 5) onLocalHover?.(false)

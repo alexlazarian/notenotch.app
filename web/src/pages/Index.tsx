@@ -195,8 +195,10 @@ const Index = () => {
 	const [isCyclingThemes, setIsCyclingThemes] = useState(false)
 	const [isBionicMode, setIsBionicMode] = useState(false)
 	const [isMarkdownMode, setIsMarkdownMode] = useState(false)
-	const [showAutoUpdateEgg, setShowAutoUpdateEgg] = useState(false)
+	const [isInvisibleMode, setIsInvisibleMode] = useState(false)
+	const [invisibleSliderPos, setInvisibleSliderPos] = useState(100)
 	const [showLocalEgg, setShowLocalEgg] = useState(false)
+	const invisibleIntervalRef = useRef<NodeJS.Timeout | null>(null)
 	const themeIntervalRef = useRef<NodeJS.Timeout | null>(null)
 	const scrollContainerRef = useRef<HTMLDivElement>(null)
 	const notchRef = useRef<HTMLDivElement>(null)
@@ -250,15 +252,32 @@ const Index = () => {
 		setIsMarkdownMode(isHovering)
 	}
 
-	// Handle "Auto updates" easter egg - 10% chance to show on hover
-	const handleAutoUpdateHover = (isHovering: boolean) => {
+	// Handle "Invisible to others" feature hover - animate slider 0-100%
+	const handleInvisibleHover = (isHovering: boolean) => {
 		if (isHovering) {
-			// 10% chance to show easter egg
-			if (Math.random() < 0.1) {
-				setShowAutoUpdateEgg(true)
-			}
+			setIsInvisibleMode(true)
+			setInvisibleSliderPos(100) // Start fully visible
+			// Animate slider from right to left, then back
+			let direction = -1
+			let pos = 100
+			invisibleIntervalRef.current = setInterval(() => {
+				pos += direction * 2
+				if (pos <= 0) {
+					pos = 0
+					direction = 1
+				} else if (pos >= 100) {
+					pos = 100
+					direction = -1
+				}
+				setInvisibleSliderPos(pos)
+			}, 30)
 		} else {
-			setShowAutoUpdateEgg(false)
+			setIsInvisibleMode(false)
+			setInvisibleSliderPos(100)
+			if (invisibleIntervalRef.current) {
+				clearInterval(invisibleIntervalRef.current)
+				invisibleIntervalRef.current = null
+			}
 		}
 	}
 
@@ -293,11 +312,14 @@ const Index = () => {
 		})
 	}
 
-	// Cleanup interval on unmount
+	// Cleanup intervals on unmount
 	useEffect(() => {
 		return () => {
 			if (themeIntervalRef.current) {
 				clearInterval(themeIntervalRef.current)
+			}
+			if (invisibleIntervalRef.current) {
+				clearInterval(invisibleIntervalRef.current)
 			}
 		}
 	}, [])
@@ -460,31 +482,32 @@ const Index = () => {
 							</svg>
 						</div>
 					)}
+					
+					{/* Note with slider mask effect */}
 					<div 
-						className='p-4 shadow-lg rounded-sm transition-all duration-500'
+						className='relative w-full p-4 rounded-sm'
 						style={{
-							background: showAutoUpdateEgg ? '#1a1a1a' : showLocalEgg ? '#0a0a0a' : isBionicMode ? '#1a1a2e' : isMarkdownMode ? '#0d1117' : noteThemes[currentThemeIndex].background,
+							background: showLocalEgg ? '#0a0a0a' : isBionicMode ? '#1a1a2e' : isMarkdownMode ? '#0d1117' : noteThemes[currentThemeIndex].background,
 							boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
 							minHeight: '90px',
+							// Use CSS mask to fade out the right portion
+							WebkitMaskImage: isInvisibleMode 
+								? `linear-gradient(to right, black 0%, black ${invisibleSliderPos}%, transparent ${invisibleSliderPos}%, transparent 100%)`
+								: 'none',
+							maskImage: isInvisibleMode 
+								? `linear-gradient(to right, black 0%, black ${invisibleSliderPos}%, transparent ${invisibleSliderPos}%, transparent 100%)`
+								: 'none',
 						}}
 					>
 						<div 
 							className='text-[11px] leading-relaxed transition-all duration-500'
 							style={{
-								color: showAutoUpdateEgg || showLocalEgg ? '#e2e8f0' : isBionicMode ? '#e2e8f0' : isMarkdownMode ? '#c9d1d9' : noteThemes[currentThemeIndex].color,
-								fontFamily: showAutoUpdateEgg || showLocalEgg || isBionicMode || isMarkdownMode ? '"Inter", sans-serif' : noteThemes[currentThemeIndex].fontFamily,
-								whiteSpace: showAutoUpdateEgg || showLocalEgg || isBionicMode || isMarkdownMode ? 'normal' : 'pre-line',
+								color: showLocalEgg ? '#e2e8f0' : isBionicMode ? '#e2e8f0' : isMarkdownMode ? '#c9d1d9' : noteThemes[currentThemeIndex].color,
+								fontFamily: showLocalEgg || isBionicMode || isMarkdownMode ? '"Inter", sans-serif' : noteThemes[currentThemeIndex].fontFamily,
+								whiteSpace: showLocalEgg || isBionicMode || isMarkdownMode ? 'normal' : 'pre-line',
 							}}
 						>
-							{showAutoUpdateEgg ? (
-								<div className='text-center'>
-									<div className='text-2xl mb-1'>👀</div>
-									<div className='text-[10px] text-gray-300'>
-										lol you really wanted<br/>to see something huh?<br/>
-										<span className='text-[#FF90E8] text-[11px] font-medium'>it just updates ✨</span>
-									</div>
-								</div>
-							) : showLocalEgg ? (
+							{showLocalEgg ? (
 								<div className='text-center'>
 									<div className='text-2xl mb-1'>🫣</div>
 									<div className='text-[10px] text-gray-300'>
@@ -511,6 +534,33 @@ const Index = () => {
 								noteThemes[currentThemeIndex].content
 							)}
 						</div>
+						
+						{/* Slider line - inside note, uses same width reference */}
+						{isInvisibleMode && (
+							<div 
+								className='absolute top-0 bottom-0 w-[2px] z-20 pointer-events-none'
+								style={{
+									left: `${invisibleSliderPos}%`,
+									transform: 'translateX(-50%)',
+									background: 'linear-gradient(to bottom, #FF90E8, white, #FF90E8)',
+									boxShadow: '0 0 8px rgba(255,144,232,0.9)',
+								}}
+							/>
+						)}
+						
+						{/* Label - only visible to you */}
+						{isInvisibleMode && (
+							<div 
+								className='absolute -bottom-6 left-0 right-0 text-center'
+								style={{
+									opacity: invisibleSliderPos > 50 ? 1 : invisibleSliderPos / 50,
+								}}
+							>
+								<span className='text-[10px] text-[#FF90E8] font-medium'>
+									👁️ Only visible to you
+								</span>
+							</div>
+						)}
 					</div>
 				</div>
 			</div>
@@ -554,18 +604,18 @@ const Index = () => {
 								<FeaturesSection 
 									onPositionHover={handlePositionHover} 
 									onThemesHover={handleThemesHover}
-									onAutoUpdateHover={handleAutoUpdateHover}
+									onInvisibleHover={handleInvisibleHover}
 									onBionicHover={handleBionicHover}
 									onMarkdownHover={handleMarkdownHover}
 									onLocalHover={handleLocalHover}
 								/>
-							</div>
-							<div id='comparison'>
-								<ComparisonSection />
-							</div>
-							<CTA />
+			</div>
+			<div id='comparison'>
+				<ComparisonSection />
+			</div>
+			<CTA />
 						</main>
-						<Footer />
+			<Footer />
 					</div>
 				</div>
 			</div>
@@ -584,6 +634,7 @@ const Index = () => {
 					<div className='w-32 h-1 bg-[#2a2a2a] rounded-b-full' />
 				</div>
 			</div>
+
 		</div>
 	)
 }
