@@ -146,12 +146,161 @@ const floatingNotes = [
 	},
 ]
 
+// Theme presets for the notch note
+const noteThemes = [
+	{
+		background: '#2a1a3a',
+		color: '#e2e8f0',
+		fontFamily: '"SF Mono", monospace',
+		content: '✨ Features:\n• Zero AI, Zero bots\n• 100% local & private\n• Works everywhere',
+		title: '✨ Features:',
+	},
+	{
+		background: '#fef9c3',
+		color: '#713f12',
+		fontFamily: '"Comic Neue", cursive',
+		content: '📝 Meeting Notes\n• Budget: $50K\n• Timeline: Q2\n• Follow up Friday',
+		title: '📝 Meeting Notes',
+	},
+	{
+		background: '#1e293b',
+		color: '#a5f3fc',
+		fontFamily: '"JetBrains Mono", monospace',
+		content: '// TODO:\nconst ship = true;\nconst bugs = false;\nreturn success;',
+		title: '// TODO:',
+	},
+	{
+		background: '#fce7f3',
+		color: '#9d174d',
+		fontFamily: '"Georgia", serif',
+		content: '💭 Remember:\nBreathe deeply.\nSpeak slowly.\nYou got this! ✨',
+		title: '💭 Remember:',
+	},
+	{
+		background: '#ecfdf5',
+		color: '#065f46',
+		fontFamily: '"Inter", sans-serif',
+		content: '✅ Checklist\n☑️ Slides ready\n☑️ Demo tested\n☐ Ship it!',
+		title: '✅ Checklist',
+	},
+]
+
 const Index = () => {
 	const [scrollProgress, setScrollProgress] = useState(0)
 	const [notchCenter, setNotchCenter] = useState({x: 0, y: 0})
+	const [showNotchNote, setShowNotchNote] = useState(false)
+	const [isDraggingNote, setIsDraggingNote] = useState(false)
+	const [noteOffset, setNoteOffset] = useState({x: 0, y: 0})
+	const [currentThemeIndex, setCurrentThemeIndex] = useState(0)
+	const [isCyclingThemes, setIsCyclingThemes] = useState(false)
+	const [isBionicMode, setIsBionicMode] = useState(false)
+	const [isMarkdownMode, setIsMarkdownMode] = useState(false)
+	const [showAutoUpdateEgg, setShowAutoUpdateEgg] = useState(false)
+	const [showLocalEgg, setShowLocalEgg] = useState(false)
+	const themeIntervalRef = useRef<NodeJS.Timeout | null>(null)
 	const scrollContainerRef = useRef<HTMLDivElement>(null)
 	const notchRef = useRef<HTMLDivElement>(null)
 	const notesContainerRef = useRef<HTMLDivElement>(null)
+	const featuresRef = useRef<HTMLDivElement>(null)
+
+	// Handle "Position anywhere" feature hover - animate the note
+	const handlePositionHover = (isHovering: boolean) => {
+		if (isHovering && !isDraggingNote) {
+			setIsDraggingNote(true)
+			// Animate: move right, then down, then back
+			setTimeout(() => setNoteOffset({x: 40, y: 10}), 100)
+			setTimeout(() => setNoteOffset({x: 60, y: 30}), 600)
+			setTimeout(() => setNoteOffset({x: 30, y: 50}), 1200)
+			setTimeout(() => setNoteOffset({x: -20, y: 40}), 1800)
+			setTimeout(() => setNoteOffset({x: 0, y: 0}), 2400)
+			setTimeout(() => setIsDraggingNote(false), 3000)
+		}
+	}
+
+	// Handle "Custom themes" feature hover - cycle through themes
+	const handleThemesHover = (isHovering: boolean) => {
+		if (isHovering && !isCyclingThemes) {
+			setIsCyclingThemes(true)
+			// Immediately change to next theme
+			let index = 1
+			setCurrentThemeIndex(index)
+			// Then continue cycling
+			themeIntervalRef.current = setInterval(() => {
+				index = (index + 1) % noteThemes.length
+				setCurrentThemeIndex(index)
+			}, 1200)
+		} else if (!isHovering) {
+			setIsCyclingThemes(false)
+			if (themeIntervalRef.current) {
+				clearInterval(themeIntervalRef.current)
+				themeIntervalRef.current = null
+			}
+			// Reset to default theme
+			setCurrentThemeIndex(0)
+		}
+	}
+
+	// Handle "Bionic reading" feature hover - show bionic text
+	const handleBionicHover = (isHovering: boolean) => {
+		setIsBionicMode(isHovering)
+	}
+
+	// Handle "Markdown support" feature hover - show markdown content
+	const handleMarkdownHover = (isHovering: boolean) => {
+		setIsMarkdownMode(isHovering)
+	}
+
+	// Handle "Auto updates" easter egg - 10% chance to show on hover
+	const handleAutoUpdateHover = (isHovering: boolean) => {
+		if (isHovering) {
+			// 10% chance to show easter egg
+			if (Math.random() < 0.1) {
+				setShowAutoUpdateEgg(true)
+			}
+		} else {
+			setShowAutoUpdateEgg(false)
+		}
+	}
+
+	// Handle "100% local" easter egg - 10% chance to show on hover
+	const handleLocalHover = (isHovering: boolean) => {
+		if (isHovering) {
+			// 10% chance to show easter egg
+			if (Math.random() < 0.1) {
+				setShowLocalEgg(true)
+			}
+		} else {
+			setShowLocalEgg(false)
+		}
+	}
+
+	// Apply bionic reading to text - bold first 40% of each word
+	const applyBionicReading = (text: string) => {
+		return text.split(' ').map((word, i) => {
+			// Skip short words and special characters
+			if (word.length <= 2) {
+				return <span key={i}>{word} </span>
+			}
+			const boldLength = Math.ceil(word.length * 0.4)
+			const boldPart = word.slice(0, boldLength)
+			const restPart = word.slice(boldLength)
+			return (
+				<span key={i}>
+					<strong className='font-bold'>{boldPart}</strong>
+					<span className='opacity-70'>{restPart}</span>{' '}
+				</span>
+			)
+		})
+	}
+
+	// Cleanup interval on unmount
+	useEffect(() => {
+		return () => {
+			if (themeIntervalRef.current) {
+				clearInterval(themeIntervalRef.current)
+			}
+		}
+	}, [])
 
 	// Optimized scroll handler using requestAnimationFrame
 	useEffect(() => {
@@ -198,6 +347,28 @@ const Index = () => {
 		window.addEventListener('resize', updateNotchCenter)
 		return () => window.removeEventListener('resize', updateNotchCenter)
 	}, [scrollProgress])
+
+	// Intersection Observer to detect when features section is in view
+	useEffect(() => {
+		const featuresElement = featuresRef.current
+		const scrollContainer = scrollContainerRef.current
+		if (!featuresElement || !scrollContainer) return
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					setShowNotchNote(entry.isIntersecting)
+				})
+			},
+			{
+				root: scrollContainer,
+				threshold: 0.2,
+			}
+		)
+
+		observer.observe(featuresElement)
+		return () => observer.disconnect()
+	}, [])
 
 	// Scale from 1 to 0.98 as user scrolls (minimal zoom out)
 	const scale = 1 - scrollProgress * 0.02
@@ -265,6 +436,83 @@ const Index = () => {
 				<div className='w-[180px] h-[36px] bg-black rounded-b-[10px] flex items-center justify-center shadow-lg'>
 					<NotchEye notchCenter={notchCenter} noteCenter={null} />
 				</div>
+				
+				{/* Note that appears below notch when features section is in view */}
+				<div 
+					className='absolute top-full left-1/2 w-[180px] min-h-[100px] select-none'
+					style={{
+						opacity: showNotchNote ? 1 : 0,
+						transform: `translateX(calc(-50% + ${noteOffset.x}px)) translateY(${showNotchNote ? noteOffset.y : -10}px)`,
+						pointerEvents: 'none',
+						transition: isDraggingNote 
+							? 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease-out' 
+							: 'transform 0.5s ease-out, opacity 0.3s ease-out',
+					}}
+				>
+					{/* Cursor icon - appears during drag */}
+					{isDraggingNote && (
+						<div 
+							className='absolute -top-3 -right-3 z-10 transition-opacity duration-200'
+							style={{ opacity: isDraggingNote ? 1 : 0 }}
+						>
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="drop-shadow-lg">
+								<path d="M5 3L19 12L12 13L9 20L5 3Z" fill="white" stroke="black" strokeWidth="1.5"/>
+							</svg>
+						</div>
+					)}
+					<div 
+						className='p-4 shadow-lg rounded-sm transition-all duration-500'
+						style={{
+							background: showAutoUpdateEgg ? '#1a1a1a' : showLocalEgg ? '#0a0a0a' : isBionicMode ? '#1a1a2e' : isMarkdownMode ? '#0d1117' : noteThemes[currentThemeIndex].background,
+							boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
+							minHeight: '90px',
+						}}
+					>
+						<div 
+							className='text-[11px] leading-relaxed transition-all duration-500'
+							style={{
+								color: showAutoUpdateEgg || showLocalEgg ? '#e2e8f0' : isBionicMode ? '#e2e8f0' : isMarkdownMode ? '#c9d1d9' : noteThemes[currentThemeIndex].color,
+								fontFamily: showAutoUpdateEgg || showLocalEgg || isBionicMode || isMarkdownMode ? '"Inter", sans-serif' : noteThemes[currentThemeIndex].fontFamily,
+								whiteSpace: showAutoUpdateEgg || showLocalEgg || isBionicMode || isMarkdownMode ? 'normal' : 'pre-line',
+							}}
+						>
+							{showAutoUpdateEgg ? (
+								<div className='text-center'>
+									<div className='text-2xl mb-1'>👀</div>
+									<div className='text-[10px] text-gray-300'>
+										lol you really wanted<br/>to see something huh?<br/>
+										<span className='text-[#FF90E8] text-[11px] font-medium'>it just updates ✨</span>
+									</div>
+								</div>
+							) : showLocalEgg ? (
+								<div className='text-center'>
+									<div className='text-2xl mb-1'>🫣</div>
+									<div className='text-[10px] text-gray-300'>
+										psst... your secrets<br/>are safe with me<br/>
+										<span className='text-[#FF90E8] text-[11px] font-medium'>pinky promise 🤙</span>
+									</div>
+								</div>
+							) : isBionicMode ? (
+								<>
+									<div className='text-[#FF90E8] font-semibold mb-1'>⚡ Bionic Mode</div>
+									{applyBionicReading('Welcome everyone. Today we will discuss the quarterly roadmap and budget allocation.')}
+								</>
+							) : isMarkdownMode ? (
+								<div className='space-y-1'>
+									<div className='text-[13px] font-bold text-white'>📝 Meeting Notes</div>
+									<div className='text-[10px] text-[#FF90E8] font-semibold'>Important:</div>
+									<ul className='text-[10px] space-y-0.5 ml-2'>
+										<li className='flex items-center gap-1'><span className='text-[#FF90E8]'>•</span> Budget approved</li>
+										<li className='flex items-center gap-1'><span className='text-[#FF90E8]'>•</span> Q3 deadline set</li>
+										<li className='flex items-center gap-1'><span className='text-[#FF90E8]'>•</span> <em className='italic'>Follow up Friday</em></li>
+									</ul>
+								</div>
+							) : (
+								noteThemes[currentThemeIndex].content
+							)}
+						</div>
+					</div>
+				</div>
 			</div>
 
 			{/* Screen content area */}
@@ -302,8 +550,15 @@ const Index = () => {
 						<MacMenuBar show={scrollProgress > 0.3} />
 						<main>
 							<Hero />
-							<div id='features'>
-								<FeaturesSection />
+							<div id='features' ref={featuresRef}>
+								<FeaturesSection 
+									onPositionHover={handlePositionHover} 
+									onThemesHover={handleThemesHover}
+									onAutoUpdateHover={handleAutoUpdateHover}
+									onBionicHover={handleBionicHover}
+									onMarkdownHover={handleMarkdownHover}
+									onLocalHover={handleLocalHover}
+								/>
 							</div>
 							<div id='comparison'>
 								<ComparisonSection />

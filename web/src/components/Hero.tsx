@@ -52,10 +52,10 @@ export const Hero = () => {
 				<div className='reveal opacity-0 text-xl md:text-2xl text-gray-400 mb-12 max-w-2xl mx-auto h-8' style={{animationDelay: '0.1s'}}>
 					<TextType
 						text={[
-							'Not another AI tool. Just your notes.',
-							'Invisible on screen shares. Visible to you.',
-							'No bots joining your calls. Ever.',
-							'Your words. Your prep. Your advantage.',
+							'Notes under your camera. Eyes on the prize.',
+							'Look confident. Sound natural. Be prepared.',
+							'Read your notes. Look like you just know it.',
+							'Your secret weapon for every call.',
 						]}
 						as='p'
 						typingSpeed={60}
@@ -82,7 +82,7 @@ export const Hero = () => {
 								<AppleLogo className='!size-6 transition-all duration-300 group-hover:opacity-0 group-hover:!w-0 group-hover:-ml-2' />
 								<span className='relative'>
 								<span className='transition-all duration-300 group-hover:opacity-0'>Download for macOS*</span>
-								<span className='absolute inset-0 opacity-0 transition-all duration-300 group-hover:opacity-100 text-[#FF90E8] whitespace-nowrap'>Download on Gumroad</span>
+								<span className='absolute inset-0 opacity-0 transition-all duration-300 group-hover:opacity-100 text-[#FF90E8] whitespace-nowrap'>Get on Gumroad</span>
 								</span>
 							</span>
 							<GumroadLogo className='!size-6 opacity-0 transition-all duration-300 group-hover:opacity-100 -ml-4 group-hover:ml-0 group-hover:text-[#FF90E8]' />

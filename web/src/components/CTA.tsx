@@ -25,7 +25,7 @@ export const CTA = () => {
 					Download NoteNotch and transform how you present on video calls.
 				</p>
 
-				{/* Download Button */}
+				{/* Download Button - Same as Hero */}
 				<a 
 					href='https://iclazar.gumroad.com/l/notenotch'
 					target='_blank'
@@ -33,17 +33,17 @@ export const CTA = () => {
 					className='inline-block'
 				>
 					<Button 
-						size='lg'
-						className='group bg-[#FF90E8] hover:bg-[#ff9fec] text-black px-10 py-6 text-lg rounded-full flex items-center gap-2 transition-all duration-300'
+						size='lg' 
+						className='group bg-[#FF90E8] hover:bg-black text-black hover:text-[#FF90E8] px-8 py-6 text-lg rounded-full flex items-center gap-2 shadow-lg transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,144,232,0.5)] hover:pr-4'
 					>
 						<span className='flex items-center gap-2 transition-all duration-300 group-hover:-translate-x-1'>
-							<AppleLogo className='!size-5 transition-all duration-300 group-hover:opacity-0 group-hover:!w-0 group-hover:-ml-2' />
+							<AppleLogo className='!size-6 transition-all duration-300 group-hover:opacity-0 group-hover:!w-0 group-hover:-ml-2' />
 							<span className='relative'>
-								<span className='transition-all duration-300 group-hover:opacity-0'>Download for Mac</span>
-								<span className='absolute inset-0 opacity-0 transition-all duration-300 group-hover:opacity-100 whitespace-nowrap'>Get on Gumroad</span>
+								<span className='transition-all duration-300 group-hover:opacity-0'>Download for macOS</span>
+								<span className='absolute inset-0 opacity-0 transition-all duration-300 group-hover:opacity-100 text-[#FF90E8] whitespace-nowrap'>Get on Gumroad</span>
 							</span>
 						</span>
-						<GumroadLogo className='!size-5 opacity-0 transition-all duration-300 group-hover:opacity-100 -ml-4 group-hover:ml-0' />
+						<GumroadLogo className='!size-6 opacity-0 transition-all duration-300 group-hover:opacity-100 -ml-4 group-hover:ml-0 group-hover:text-[#FF90E8]' />
 					</Button>
 				</a>
 
