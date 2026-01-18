@@ -1,6 +1,7 @@
 import {Button} from '@/components/ui/button'
 import {useEffect, useRef} from 'react'
 import {AppleLogo} from '@/assets/logos/apple'
+import {GumroadLogo} from '@/assets/logos/gumroad'
 import TextType from '@/components/ui/text-type'
 
 const logoUrl = `${import.meta.env.BASE_URL}logo.png`
@@ -200,14 +201,26 @@ export const Hero = () => {
 				</div>
 
 				{/* CTA */}
-				<div className='reveal opacity-0 flex flex-col sm:flex-row gap-4 justify-center items-center mb-16' style={{animationDelay: '0.2s'}}>
-					<Button 
-						size='lg' 
-						className='bg-black hover:bg-gray-800 text-white px-8 py-6 text-lg rounded-full flex items-center gap-2 shadow-lg'
+				<div className='reveal opacity-0 flex flex-col sm:flex-row gap-4 justify-center items-center mb-4' style={{animationDelay: '0.2s'}}>
+					<a 
+						href='https://iclazar.gumroad.com/l/notenotch'
+						target='_blank'
+						rel='noopener noreferrer'
 					>
-						<AppleLogo className='w-5 h-5' />
-						Download for macOS*
-					</Button>
+						<Button 
+							size='lg' 
+							className='group bg-black hover:bg-black text-white px-8 py-6 text-lg rounded-full flex items-center gap-2 shadow-lg transition-all duration-300 hover:pr-4'
+						>
+							<span className='flex items-center gap-2 transition-all duration-300 group-hover:-translate-x-1'>
+								<AppleLogo className='!size-6 transition-all duration-300 group-hover:opacity-0 group-hover:!w-0 group-hover:-ml-2' />
+								<span className='relative'>
+									<span className='transition-all duration-300 group-hover:opacity-0'>Download for macOS*</span>
+									<span className='absolute inset-0 opacity-0 transition-all duration-300 group-hover:opacity-100 text-[#FF90E8] whitespace-nowrap'>Download on Gumroad</span>
+								</span>
+							</span>
+							<GumroadLogo className='!size-6 opacity-0 transition-all duration-300 group-hover:opacity-100 -ml-4 group-hover:ml-0' />
+						</Button>
+					</a>
 				</div>
 
 				{/* Requirement note */}

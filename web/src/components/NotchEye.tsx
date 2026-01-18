@@ -47,11 +47,11 @@ const NotchEye: React.FC<NotchEyeProps> = ({
 
 	return (
 		<div
-			className='w-[12px] h-[12px] rounded-full bg-stone-500/10 flex items-center justify-center relative animate-blink'
+			className='w-[12px] h-[12px] rounded-full bg-gray-500/30 flex items-center justify-center relative animate-blink'
 			style={{overflow: 'hidden'}}
 		>
 			<div
-				className='rounded-full bg-stone-900 absolute'
+				className='rounded-full bg-black absolute'
 				style={{
 					width: PUPIL_SIZE,
 					height: PUPIL_SIZE,
