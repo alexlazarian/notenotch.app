@@ -164,25 +164,25 @@ export const Hero = () => {
 				>
 					<Button size='lg'>Download for macOS*</Button>
 				</div>
+			</div>
 
-				{/* Feature Preview - Overflowing */}
-				<div
-					className='w-full max-w-[960px] mx-auto animate-fade-in-up opacity-0 relative z-[20]'
-					style={{
-						animationDelay: '1.0s',
-						animationFillMode: 'forwards',
-						marginBottom: '-120px',
-					}}
-				>
-					<div className='aspect-video w-[960px] rounded-xl overflow-hidden'>
-						<iframe
-							src='https://www.loom.com/embed/f8167468395343d1a0fbfabc04723dcf'
-							frameBorder='0'
-							allowFullScreen
-							className='w-full h-full'
-							title='NoteNotch in action'
-						></iframe>
-					</div>
+			{/* Feature Preview - Outside max-w-4xl container */}
+			<div
+				className='w-full max-w-[960px] mx-auto px-6 animate-fade-in-up opacity-0 relative z-[20]'
+				style={{
+					animationDelay: '1.0s',
+					animationFillMode: 'forwards',
+					marginBottom: '-120px',
+				}}
+			>
+				<div className='relative w-full pb-[56.25%] rounded-xl overflow-hidden'>
+					<iframe
+						src='https://www.loom.com/embed/f8167468395343d1a0fbfabc04723dcf'
+						frameBorder='0'
+						allowFullScreen
+						className='absolute inset-0 w-full h-full'
+						title='NoteNotch in action'
+					></iframe>
 				</div>
 			</div>
 		</section>
